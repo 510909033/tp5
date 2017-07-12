@@ -26,7 +26,8 @@
         "topthink/think-worker": "^1.0",
         "topthink/think-helper": "^1.0",
         "topthink/think-queue": "^1.0",
-        "topthink/think-angular": "^1.0"
+        "topthink/think-angular": "^1.0",
+        "symfony/css-selector": "2.8"
     },
     "extra": {
         "think-path": "thinkphp"

@@ -13,18 +13,18 @@ namespace tests;
 class RegTest extends TestCase
 {
 
-    public function testBasicExample()
+    public function testReg_ok()
     {
-        return ;
+        $this->tprint("测试注册一个新用户");
 //         $this->assertEmpty('');
         $param = array();
 //         $param['_method'] = 'PUT';
-        $param['uni_account'] = 'username1';
+        $param['uni_account'] = 'unit_test'.date('His').rand(1,100000);
         $param['solt'] = 12345;
         $param['password'] = sha1($param['solt'].$param['uni_account']);
         $param['regtime'] = time();
         $param['type'] = '手动注册test';
-        $this->makeRequest('POST', 'reg' , $param)->see(1);
+        $this->makeRequest('POST', 'reg' , $param)->assertNull($this->response->getVars()['err']);
 //         $this->visit('reg');
 //         $this->visit('/')->see('ThinkPHP');
     }
@@ -60,10 +60,14 @@ class RegTest extends TestCase
     
     public function test1(){
         
-        
-        $this->visit('/home/Reg/create')->assertViewHas('test_result' ,1 );
-        
-        
+        return ;
+        $this->makeRequest('GET', '/reg');
+        $this->assertResponseOk();
+        $this->see('注册首页');
+//         $this->seeInElement('body','hello');
+        $this->seeInElement('body','form');
+//         $this->seeInElement('body','测试',true);
+
     }
     
     

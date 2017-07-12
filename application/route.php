@@ -1,4 +1,7 @@
 <?php
+use think\Route;
+use think\Cache;
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -8,9 +11,14 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-\think\Route::resource('blog2','Index/Blog');
-\think\Route::resource('reg','Member/Reg');
 
+
+//注册首页
+Route::get('reg','home/reg/index');
+//注册表单提交页
+Route::post('reg' ,'home/reg/reg');
+
+// Route::rule('weixin/:id$','base/weixin/index');
 
 return [
     '__pattern__' => [
@@ -22,3 +30,4 @@ return [
     ],
 
 ];
+

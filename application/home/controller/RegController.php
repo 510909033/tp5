@@ -4,53 +4,50 @@ namespace app\home\controller;
 use app\base\controller\form\FormController;
 use app\home\model\User;
 use app\home\validate\RegValidate;
-use think\Db;
 use think\db\Query;
 use function think\view;
+use think\Validate;
+use think\Loader;
+use app\base\controller\base\BaseModelController;
+use app\home\model\UserInfo;
+use think\Route;
 
-class RegController 
+class RegController extends BaseController 
 {
     
-
+    public function index(){
+        $vars = [];
+        
+        $res = Route::rules();
+//         dump($res);
+        
+        dump($this->request->routeInfo());
     
-    public function create(){
-        try {
-            
-            $model = new User();
-            $validate = new RegValidate();
-            $form = new FormController($model, $validate);
-            
-            $data = request()->param();
-            
-            $data['uni_account'] = 'username025034';
-            
-            $model::transaction(function() use ($model , $data){
-                
-                $res = $model::get(function(Query $query) use ($data){
-                    $query->where('uni_account' ,'eq' ,$data['uni_account']);
-                });
-                
-            });
-            
-            
-            
-            $insert_id = $form->add($data);
-            
-            if (!$insert_id){
-                
-                View::share('test_result' , 0);
+        dump(url('home/reg/index'));
+        
+        
+        
+//         User::destroy(function(Query $query){
+//             $query->where('id' , 'gt',0);
+//         });
+//         $user->restore();
+        
+        $user = User::all();
+        
+        
+        trace(print_r($this->request->server(),true));
+        return \view( $this->debug_template_prefix.'index' , $vars );
+    }
+    
+    
 
-                
-                return 0;
-            }else{
-                View::share('test_result' , 1);
-                return $insert_id;
-            }
-        } catch (\Exception $e) {
-          
-            return view(null);
-            dump($e->getMessage());
-        }
+    public function reg(){
+        $model = new User();
+        $data = $this->request->post();
+        $vars = $model->regApi($data);
+        trace($vars);
+        return \view(APP_PATH.'home/view/reg/create.html',$vars);
+//         return $this->fetch();
     }
     
     

@@ -3,20 +3,19 @@
 namespace app\base\controller\form;
 
 use think\Controller;
-use think\Request;
-use app\member\model\user;
 use think\Model;
 use think\Validate;
+use app\base\controller\base\BaseModelController;
 
 class FormController
 {
     /**
-     * @var Model
+     * @var BaseModelController
      */
     protected $model;
     protected $validate;
     
-    public function __construct( Model $model , Validate $validate ){
+    public function __construct( BaseModelController $model , Validate $validate ){
         $this->model = $model;
         $this->validate = $validate;
     }
@@ -31,8 +30,7 @@ class FormController
         if ( !$this->validate->check($data) ){
             exception($this->validate->getError());
         }
-        $this->model->isUpdate(false)->save($data);
-        return $this->model->id;
+        return $this->model->addOne($data);
     }
     
     /**
@@ -53,7 +51,7 @@ class FormController
         
         $where = array();
         $where['id'] = $id;
-        return $this->model->where($where)->save($data);
+        return $this->model->saveOneById($id, $data);
     }
     
     protected function validate_save_id($id){
@@ -80,6 +78,7 @@ class FormController
         if (!$this->validate_delete_id($id)){
             exception('系统错误,在删除数据时，传入的id未通过validate_save_id验证');
         }
+        return $this->model->deleteOneById($id);
     }
     
     

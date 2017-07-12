@@ -28,6 +28,10 @@ class UrlTool
     }
     
     
+    public static function getIndexUrl(){
+        return config('index');    
+    }
+    
 
     
 

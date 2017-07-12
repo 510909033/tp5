@@ -12,5 +12,16 @@ namespace tests;
 
 class TestCase extends \think\testing\TestCase
 {
-    protected $baseUrl = 'http://localhost';
+    protected $baseUrl = 'http://localhost';///tp5/public/index.php
+    protected function tprint($str){
+        return ;
+        printf($str);
+        printf(PHP_EOL);
+    }
+    
+    protected function tprint_eol(){
+        return ;
+        printf(PHP_EOL);
+    }
+    
 }
